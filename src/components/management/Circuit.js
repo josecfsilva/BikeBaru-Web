@@ -8,7 +8,6 @@ export default class Circuit extends React.Component {
         this.state = {
             circuits: [],
             newCircuitData: {
-                name: '',
                 initial_location: '',
                 final_location: '',
                 time: '',
@@ -19,7 +18,6 @@ export default class Circuit extends React.Component {
             },
             editCircuitData: {
                 id: '',
-                name: '',
                 initial_location: '',
                 final_location: '',
                 time: '',
@@ -54,7 +52,7 @@ export default class Circuit extends React.Component {
     addCircuit = _ => {
         let { newCircuitData } = this.state;
 
-        fetch(`http://localhost:4000/circuits/add?name=${newCircuitData.name}&initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
+        fetch(`http://localhost:4000/circuits/add?initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
             .then(this._refreshCircuits)
             .catch(err => console.error(err))
     }
@@ -62,14 +60,14 @@ export default class Circuit extends React.Component {
     updateCircuit = _ => {
         let { editCircuitData } = this.state;
 
-        fetch(`http://localhost:4000/circuits/edit?circuit_id=${editCircuitData.id}&name=${editCircuitData.name}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
+        fetch(`http://localhost:4000/circuits/edit?circuit_id=${editCircuitData.id}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
             .then(this._refreshCircuits)
             .catch(err => console.error(err))
     }
 
-    editCircuit(id, name, initial_location, final_location, time, distance, velocity, calories, partner_id) {
+    editCircuit(id, initial_location, final_location, time, distance, velocity, calories, partner_id) {
         this.setState({
-            editCircuitData: { id, name, initial_location, final_location, time, distance, velocity, calories, partner_id }, editCircuitModal: !this.state.editCircuitModal
+            editCircuitData: { id, initial_location, final_location, time, distance, velocity, calories, partner_id }, editCircuitModal: !this.state.editCircuitModal
         });
     }
 
@@ -85,7 +83,6 @@ export default class Circuit extends React.Component {
             .then(response => this.setState({
                 circuits: response.data,
                 newCircuitModal: false, newCircuitData: {
-                    name: '',
                     initial_location: '',
                     final_location: '',
                     time: '',
@@ -96,7 +93,6 @@ export default class Circuit extends React.Component {
                 },
                 editCircuitModal: false, editCircuitData: {
                     id: '',
-                    name: '',
                     initial_location: '',
                     final_location: '',
                     time: '',
@@ -109,9 +105,8 @@ export default class Circuit extends React.Component {
             .catch(err => console.log(err))
     }
 
-    renderCircuit = ({ circuit_id, name, initial_location, final_location, time, distance, velocity, calories, partner_id }) =>
+    renderCircuit = ({ circuit_id, initial_location, final_location, time, distance, velocity, calories, partner_id }) =>
         <tr key={circuit_id}>
-            <td>{name}</td>
             <td>{initial_location}</td>
             <td>{final_location}</td>
             <td>{time}</td>
@@ -120,7 +115,7 @@ export default class Circuit extends React.Component {
             <td>{calories}</td>
             <td>{partner_id}</td>
             <td>
-                <Button color="success" size="sm" className="mr-2" onClick={this.editCircuit.bind(this, circuit_id, name, initial_location, final_location, time, distance, velocity, calories, partner_id)}>Editar</Button>
+                <Button color="success" size="sm" className="mr-2" onClick={this.editCircuit.bind(this, circuit_id, initial_location, final_location, time, distance, velocity, calories, partner_id)}>Editar</Button>
                 <Button color="danger" size="sm" onClick={this.deleteCircuit.bind(this, circuit_id)}>Apagar</Button>
             </td>
         </tr>
@@ -139,14 +134,6 @@ export default class Circuit extends React.Component {
                         <ModalHeader toggle={this.toggleNewCircuitModal}>Adicionar um novo circuito</ModalHeader>
 
                         <ModalBody>
-                            <FormGroup>
-                                <Label for="name">Nome</Label>
-                                <Input id="name" placeholder="Insira o nome"
-                                    value={newCircuitData.name}
-                                    onChange={e => this.setState({ newCircuitData: { ...newCircuitData, name: e.target.value } })}
-                                />
-                            </FormGroup>
-
                             <FormGroup>
                                 <Label for="initial_location">Localização Inicial</Label>
                                 <Input id="initial_location" placeholder="Insira a localização inicial"
@@ -210,14 +197,6 @@ export default class Circuit extends React.Component {
 
                         <ModalBody>
                             <FormGroup>
-                                <Label for="name">Nome</Label>
-                                <Input id="name" placeholder="Insira o nome"
-                                    value={editCircuitData.name}
-                                    onChange={e => this.setState({ editCircuitData: { ...editCircuitData, name: e.target.value } })}
-                                />
-                            </FormGroup>
-
-                            <FormGroup>
                                 <Label for="initial_location">Localização Inicial</Label>
                                 <Input id="initial_location" placeholder="Insira a localização inicial"
                                     value={editCircuitData.initial_location}
@@ -278,7 +257,6 @@ export default class Circuit extends React.Component {
                     <Table>
                         <thead>
                             <tr>
-                                <th>Nome</th>
                                 <th>Localização Inicial</th>
                                 <th>Localização Final</th>
                                 <th>Duração</th>
