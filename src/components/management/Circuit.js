@@ -34,7 +34,7 @@ export default class Circuit extends React.Component {
     };
 
     componentDidMount() {
-        this._refreshCircuits();
+        this.loadCircuits();
     }
 
     toggleNewCircuitModal() {
@@ -49,32 +49,51 @@ export default class Circuit extends React.Component {
         });
     }
 
-    addCircuit = _ => {
+    addCircuit = () => {
         let { newCircuitData } = this.state;
 
-        // For Local Server
-        /*
-        fetch(`http://localhost:4000/circuits/add?initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
-            */
-        fetch(`https://bikebaru-server.herokuapp.com/circuits/add?initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
+        fetch('http://192.168.1.74:4000/circuits/add', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                initial_location: newCircuitData.initial_location,
+                final_location: newCircuitData.final_location,
+                time: newCircuitData.time,
+                distance: newCircuitData.distance,
+                velocity: newCircuitData.velocity,
+                calories: newCircuitData.calories,
+                partner_id: newCircuitData.partner_id
+            })
+        })
+            .then(this.loadCircuits)
+            .catch(err => console.error(err));
     }
 
-    updateCircuit = _ => {
+    updateCircuit = () => {
         let { editCircuitData } = this.state;
 
-        // For Local Server
-        /*
-        fetch(`http://localhost:4000/circuits/edit?circuit_id=${editCircuitData.id}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
-        */
-        fetch(`https://bikebaru-server.herokuapp.com/circuits/edit?circuit_id=${editCircuitData.id}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
+        fetch('http://192.168.1.74:4000/circuits/edit/' + editCircuitData.id, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                circuit_id: editCircuitData.id,
+                initial_location: editCircuitData.initial_location,
+                final_location: editCircuitData.final_location,
+                time: editCircuitData.time,
+                distance: editCircuitData.distance,
+                velocity: editCircuitData.velocity,
+                calories: editCircuitData.calories,
+                partner_id: editCircuitData.partner_id
+            })
+        })
+            .then(this.loadCircuits)
+            .catch(err => console.error(err));
     }
 
     editCircuit(id, initial_location, final_location, time, distance, velocity, calories, partner_id) {
@@ -83,48 +102,20 @@ export default class Circuit extends React.Component {
         });
     }
 
-    deleteCircuit(id) {
-        // For Local Server
-        /*
-        fetch(`http://localhost:4000/circuits/delete?circuit_id=${id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
-        */
-        fetch(`https://bikebaru-server.herokuapp.com/circuits/delete?circuit_id=${id}`)
-            .then(this._refreshCircuits)
-            .catch(err => console.error(err))
+    deleteCircuit = (id) => {
+        fetch('http://192.168.1.74:4000/circuits/delete/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(this.loadCircuits)
+            .catch(err => console.error(err));
     }
 
-    _refreshCircuits = _ => {
-        // For Local Server
-        /*
-        fetch('http://localhost:4000/circuits/')
-            .then(response => response.json())
-            .then(response => this.setState({
-                circuits: response.data,
-                newCircuitModal: false, newCircuitData: {
-                    initial_location: '',
-                    final_location: '',
-                    time: '',
-                    distance: 0,
-                    velocity: 0,
-                    calories: 0,
-                    partner_id: 0
-                },
-                editCircuitModal: false, editCircuitData: {
-                    id: '',
-                    initial_location: '',
-                    final_location: '',
-                    time: '',
-                    distance: 0,
-                    velocity: 0,
-                    calories: 0,
-                    partner_id: 0
-                }
-            }))
-            .catch(err => console.log(err))
-        */
-        fetch('https://bikebaru-server.herokuapp.com/circuits/')
+    loadCircuits = () => {
+        fetch('http://192.168.1.74:4000/circuits/')
             .then(response => response.json())
             .then(response => this.setState({
                 circuits: response.data,
