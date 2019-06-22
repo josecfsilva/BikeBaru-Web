@@ -52,7 +52,13 @@ export default class Circuit extends React.Component {
     addCircuit = _ => {
         let { newCircuitData } = this.state;
 
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/circuits/add?initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
+            .then(this._refreshCircuits)
+            .catch(err => console.error(err))
+            */
+        fetch(`https://bikebaru-server.herokuapp.com/circuits/add?initial_location=${newCircuitData.initial_location}&final_location=${newCircuitData.final_location}&time=${newCircuitData.time}&velocity=${newCircuitData.velocity}&distance=${newCircuitData.distance}&calories=${newCircuitData.calories}&partner_id=${newCircuitData.partner_id}`)
             .then(this._refreshCircuits)
             .catch(err => console.error(err))
     }
@@ -60,7 +66,13 @@ export default class Circuit extends React.Component {
     updateCircuit = _ => {
         let { editCircuitData } = this.state;
 
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/circuits/edit?circuit_id=${editCircuitData.id}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
+            .then(this._refreshCircuits)
+            .catch(err => console.error(err))
+        */
+        fetch(`https://bikebaru-server.herokuapp.com/circuits/edit?circuit_id=${editCircuitData.id}&initial_location=${editCircuitData.initial_location}&final_location=${editCircuitData.final_location}&time=${editCircuitData.time}&velocity=${editCircuitData.velocity}&distance=${editCircuitData.distance}&calories=${editCircuitData.calories}&partner_id=${editCircuitData.partner_id}`)
             .then(this._refreshCircuits)
             .catch(err => console.error(err))
     }
@@ -72,13 +84,47 @@ export default class Circuit extends React.Component {
     }
 
     deleteCircuit(id) {
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/circuits/delete?circuit_id=${id}`)
+            .then(this._refreshCircuits)
+            .catch(err => console.error(err))
+        */
+        fetch(`https://bikebaru-server.herokuapp.com/circuits/delete?circuit_id=${id}`)
             .then(this._refreshCircuits)
             .catch(err => console.error(err))
     }
 
     _refreshCircuits = _ => {
+        // For Local Server
+        /*
         fetch('http://localhost:4000/circuits/')
+            .then(response => response.json())
+            .then(response => this.setState({
+                circuits: response.data,
+                newCircuitModal: false, newCircuitData: {
+                    initial_location: '',
+                    final_location: '',
+                    time: '',
+                    distance: 0,
+                    velocity: 0,
+                    calories: 0,
+                    partner_id: 0
+                },
+                editCircuitModal: false, editCircuitData: {
+                    id: '',
+                    initial_location: '',
+                    final_location: '',
+                    time: '',
+                    distance: 0,
+                    velocity: 0,
+                    calories: 0,
+                    partner_id: 0
+                }
+            }))
+            .catch(err => console.log(err))
+        */
+        fetch('https://bikebaru-server.herokuapp.com/circuits/')
             .then(response => response.json())
             .then(response => this.setState({
                 circuits: response.data,

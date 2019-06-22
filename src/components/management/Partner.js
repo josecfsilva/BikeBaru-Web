@@ -58,7 +58,13 @@ export default class Partner extends React.Component {
     addPartner = _ => {
         let { newPartnerData } = this.state;
 
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/partners/add?name=${newPartnerData.name}&nickname=${newPartnerData.nickname}&password=${newPartnerData.password}&circuits=${newPartnerData.circuits}&time=${newPartnerData.time}&events=${newPartnerData.events}&awards=${newPartnerData.awards}`)
+            .then(this._refreshPartners)
+            .catch(err => console.error(err))
+        */
+        fetch(`https://bikebaru-server.herokuapp.com/partners/add?name=${newPartnerData.name}&nickname=${newPartnerData.nickname}&password=${newPartnerData.password}&circuits=${newPartnerData.circuits}&time=${newPartnerData.time}&events=${newPartnerData.events}&awards=${newPartnerData.awards}`)
             .then(this._refreshPartners)
             .catch(err => console.error(err))
     }
@@ -66,7 +72,13 @@ export default class Partner extends React.Component {
     updatePartner = _ => {
         let { editPartnerData } = this.state;
 
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/partners/edit?partner_id=${editPartnerData.id}&name=${editPartnerData.name}&nickname=${editPartnerData.nickname}&password=${editPartnerData.password}&circuits=${editPartnerData.circuits}&time=${editPartnerData.time}&events=${editPartnerData.events}&awards=${editPartnerData.awards}`)
+            .then(this._refreshPartners)
+            .catch(err => console.error(err))
+        */
+        fetch(`https://bikebaru-server.herokuapp.com/partners/edit?partner_id=${editPartnerData.id}&name=${editPartnerData.name}&nickname=${editPartnerData.nickname}&password=${editPartnerData.password}&circuits=${editPartnerData.circuits}&time=${editPartnerData.time}&events=${editPartnerData.events}&awards=${editPartnerData.awards}`)
             .then(this._refreshPartners)
             .catch(err => console.error(err))
     }
@@ -78,13 +90,47 @@ export default class Partner extends React.Component {
     }
 
     deletePartner(id) {
+        // For Local Server
+        /*
         fetch(`http://localhost:4000/partners/delete?partner_id=${id}`)
+            .then(this._refreshPartners)
+            .catch(err => console.error(err))
+        */
+        fetch(`https://bikebaru-server.herokuapp.com/partners/delete?partner_id=${id}`)
             .then(this._refreshPartners)
             .catch(err => console.error(err))
     }
 
     _refreshPartners = _ => {
+        // For Local Server
+        /*
         fetch('http://localhost:4000/partners/')
+            .then(response => response.json())
+            .then(response => this.setState({
+                partners: response.data,
+                newPartnerModal: false, newPartnerData: {
+                    name: '',
+                    nickname: '',
+                    password: '',
+                    circuits: 0,
+                    time: '',
+                    events: 0,
+                    awards: 0
+                },
+                editPartnerModal: false, editPartnerData: {
+                    id: '',
+                    nickname: '',
+                    name: '',
+                    password: '',
+                    circuits: 0,
+                    time: '',
+                    events: 0,
+                    awards: 0
+                }
+            }))
+            .catch(err => console.log(err))
+            */
+        fetch('https://bikebaru-server.herokuapp.com/partners/')
             .then(response => response.json())
             .then(response => this.setState({
                 partners: response.data,
