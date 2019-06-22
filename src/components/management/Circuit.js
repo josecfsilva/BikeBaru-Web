@@ -52,7 +52,7 @@ export default class Circuit extends React.Component {
     addCircuit = () => {
         let { newCircuitData } = this.state;
 
-        fetch('http://192.168.1.74:4000/circuits/add', {
+        fetch('https://bikebaru-server.herokuapp.com/circuits/add', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -75,7 +75,7 @@ export default class Circuit extends React.Component {
     updateCircuit = () => {
         let { editCircuitData } = this.state;
 
-        fetch('http://192.168.1.74:4000/circuits/edit/' + editCircuitData.id, {
+        fetch('https://bikebaru-server.herokuapp.com/circuits/edit/' + editCircuitData.id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -103,7 +103,7 @@ export default class Circuit extends React.Component {
     }
 
     deleteCircuit = (id) => {
-        fetch('http://192.168.1.74:4000/circuits/delete/' + id, {
+        fetch('https://bikebaru-server.herokuapp.com/circuits/delete/' + id, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -115,7 +115,7 @@ export default class Circuit extends React.Component {
     }
 
     loadCircuits = () => {
-        fetch('http://192.168.1.74:4000/circuits/')
+        fetch('https://bikebaru-server.herokuapp.com/circuits/')
             .then(response => response.json())
             .then(response => this.setState({
                 circuits: response.data,
