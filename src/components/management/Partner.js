@@ -2,6 +2,8 @@ import React from 'react';
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from 'reactstrap';
 import { Row } from "react-bootstrap";
 
+const SERVER_URL = 'https://bikebaru-server.herokuapp.com';
+
 export default class Partner extends React.Component {
     constructor(props) {
         super(props);
@@ -55,10 +57,11 @@ export default class Partner extends React.Component {
         });
     }
 
+    /* Add Partner */
     addPartner = () => {
         let { newPartnerData } = this.state;
 
-        fetch('https://bikebaru-server.herokuapp.com/partners/add', {
+        fetch(SERVER_URL + '/partners/add', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -78,10 +81,11 @@ export default class Partner extends React.Component {
             .catch(err => console.error(err));
     }
 
+    /* Edit Partner */
     updatePartner = () => {
         let { editPartnerData } = this.state;
 
-        fetch('https://bikebaru-server.herokuapp.com/partners/edit/' + editPartnerData.id, {
+        fetch(SERVER_URL + '/partners/edit/' + editPartnerData.id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -108,8 +112,9 @@ export default class Partner extends React.Component {
         });
     }
 
+    /* Delete Partner */
     deletePartner = (id) => {
-        fetch('https://bikebaru-server.herokuapp.com/partners/delete/' + id, {
+        fetch(SERVER_URL + '/partners/delete/' + id, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -120,8 +125,9 @@ export default class Partner extends React.Component {
             .catch(err => console.error(err));
     }
 
+    /* Get Partners */
     loadPartners = () => {
-        fetch('https://bikebaru-server.herokuapp.com/partners/')
+        fetch(SERVER_URL + '/partners/')
             .then(response => response.json())
             .then(response => this.setState({
                 partners: response.data,

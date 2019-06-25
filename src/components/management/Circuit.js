@@ -2,7 +2,10 @@ import React from 'react';
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from 'reactstrap';
 import { Row } from "react-bootstrap";
 
+const SERVER_URL = 'https://bikebaru-server.herokuapp.com';
+
 export default class Circuit extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -13,8 +16,7 @@ export default class Circuit extends React.Component {
                 time: '',
                 distance: 0,
                 velocity: 0,
-                calories: 0,
-                partner_id: 0
+                calories: 0
             },
             editCircuitData: {
                 id: '',
@@ -23,8 +25,7 @@ export default class Circuit extends React.Component {
                 time: '',
                 distance: 0,
                 velocity: 0,
-                calories: 0,
-                partner_id: 0
+                calories: 0
             },
             newCircuitModal: false,
             editCircuitModal: false
@@ -49,10 +50,11 @@ export default class Circuit extends React.Component {
         });
     }
 
+    /* Add Circuit */
     addCircuit = () => {
         let { newCircuitData } = this.state;
 
-        fetch('https://bikebaru-server.herokuapp.com/circuits/add', {
+        fetch(SERVER_URL + '/circuits/add', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -65,17 +67,18 @@ export default class Circuit extends React.Component {
                 distance: newCircuitData.distance,
                 velocity: newCircuitData.velocity,
                 calories: newCircuitData.calories,
-                partner_id: newCircuitData.partner_id
+                partner_id: 1
             })
         })
             .then(this.loadCircuits)
             .catch(err => console.error(err));
     }
 
+    /* Edit Circuit */
     updateCircuit = () => {
         let { editCircuitData } = this.state;
 
-        fetch('https://bikebaru-server.herokuapp.com/circuits/edit/' + editCircuitData.id, {
+        fetch(SERVER_URL + '/circuits/edit/' + editCircuitData.id, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -89,21 +92,22 @@ export default class Circuit extends React.Component {
                 distance: editCircuitData.distance,
                 velocity: editCircuitData.velocity,
                 calories: editCircuitData.calories,
-                partner_id: editCircuitData.partner_id
+                partner_id: 1
             })
         })
             .then(this.loadCircuits)
             .catch(err => console.error(err));
     }
 
-    editCircuit(id, initial_location, final_location, time, distance, velocity, calories, partner_id) {
+    editCircuit(id, initial_location, final_location, time, distance, velocity, calories) {
         this.setState({
-            editCircuitData: { id, initial_location, final_location, time, distance, velocity, calories, partner_id }, editCircuitModal: !this.state.editCircuitModal
+            editCircuitData: { id, initial_location, final_location, time, distance, velocity, calories }, editCircuitModal: !this.state.editCircuitModal
         });
     }
 
+    /* Delete Circuit */
     deleteCircuit = (id) => {
-        fetch('https://bikebaru-server.herokuapp.com/circuits/delete/' + id, {
+        fetch(SERVER_URL + '/circuits/delete/' + id, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -114,8 +118,9 @@ export default class Circuit extends React.Component {
             .catch(err => console.error(err));
     }
 
+    /* Get Circuits */
     loadCircuits = () => {
-        fetch('https://bikebaru-server.herokuapp.com/circuits/')
+        fetch(SERVER_URL + '/circuits/')
             .then(response => response.json())
             .then(response => this.setState({
                 circuits: response.data,
@@ -125,8 +130,7 @@ export default class Circuit extends React.Component {
                     time: '',
                     distance: 0,
                     velocity: 0,
-                    calories: 0,
-                    partner_id: 0
+                    calories: 0
                 },
                 editCircuitModal: false, editCircuitData: {
                     id: '',
@@ -135,14 +139,13 @@ export default class Circuit extends React.Component {
                     time: '',
                     distance: 0,
                     velocity: 0,
-                    calories: 0,
-                    partner_id: 0
+                    calories: 0
                 }
             }))
             .catch(err => console.log(err))
     }
 
-    renderCircuit = ({ circuit_id, initial_location, final_location, time, distance, velocity, calories, partner_id }) =>
+    renderCircuit = ({ circuit_id, initial_location, final_location, time, distance, velocity, calories }) =>
         <tr key={circuit_id}>
             <td>{initial_location}</td>
             <td>{final_location}</td>
@@ -150,9 +153,8 @@ export default class Circuit extends React.Component {
             <td>{distance}</td>
             <td>{velocity}</td>
             <td>{calories}</td>
-            <td>{partner_id}</td>
             <td>
-                <Button color="success" size="sm" className="mr-2" onClick={this.editCircuit.bind(this, circuit_id, initial_location, final_location, time, distance, velocity, calories, partner_id)}>Editar</Button>
+                <Button color="success" size="sm" className="mr-2" onClick={this.editCircuit.bind(this, circuit_id, initial_location, final_location, time, distance, velocity, calories)}>Editar</Button>
                 <Button color="danger" size="sm" onClick={this.deleteCircuit.bind(this, circuit_id)}>Apagar</Button>
             </td>
         </tr>
@@ -212,13 +214,6 @@ export default class Circuit extends React.Component {
                                     value={newCircuitData.calories}
                                     onChange={e => this.setState({ newCircuitData: { ...newCircuitData, calories: e.target.value } })} />
                             </FormGroup>
-
-                            <FormGroup>
-                                <Label for="partner_id">ID do Sócio</Label>
-                                <Input id="partner_id" type="number"
-                                    value={newCircuitData.partner_id}
-                                    onChange={e => this.setState({ newCircuitData: { ...newCircuitData, partner_id: e.target.value } })} />
-                            </FormGroup>
                         </ModalBody>
 
                         <ModalFooter>
@@ -274,13 +269,6 @@ export default class Circuit extends React.Component {
                                     value={editCircuitData.calories}
                                     onChange={e => this.setState({ editCircuitData: { ...editCircuitData, calories: e.target.value } })} />
                             </FormGroup>
-
-                            <FormGroup>
-                                <Label for="partner_id">ID do Sócio</Label>
-                                <Input id="partner_id" type="number"
-                                    value={editCircuitData.partner_id}
-                                    onChange={e => this.setState({ editCircuitData: { ...editCircuitData, partner_id: e.target.value } })} />
-                            </FormGroup>
                         </ModalBody>
 
                         <ModalFooter>
@@ -300,7 +288,6 @@ export default class Circuit extends React.Component {
                                 <th>Distância</th>
                                 <th>Velocidade</th>
                                 <th>Calorias</th>
-                                <th>ID do Sócio</th>
                             </tr>
                         </thead>
 
