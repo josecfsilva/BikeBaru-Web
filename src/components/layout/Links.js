@@ -2,7 +2,7 @@
 import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export default class SignedInLinks extends React.Component {
+export default class Links extends React.Component {
     constructor(props) {
         super(props);
 
@@ -50,16 +50,6 @@ export default class SignedInLinks extends React.Component {
                         <NavItem>
                             <NavLink href="/contacts">
                                 Contactos
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/">
-                                Logout
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="/" className="grey lighten-1">
-                                NN
                             </NavLink>
                         </NavItem>
                     </Nav>

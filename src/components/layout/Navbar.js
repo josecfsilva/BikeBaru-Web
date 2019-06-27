@@ -1,10 +1,10 @@
 import React from 'react';
-import SignedInLinks from './SignedInLinks';
+import Links from './Links';
 
 export default class Navbar extends React.Component {
     render() {
         return (
-            <SignedInLinks />
+            <Links />
         );
     }
 }
