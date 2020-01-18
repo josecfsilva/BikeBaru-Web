@@ -12,6 +12,8 @@ export default class Contacts extends React.Component {
     render() {
         return (
             <Container>
+                <h4 style={{ textAlign: "center" }}>Contactos</h4>
+
                 <Row className="justify-content-center">
                     <Card>
                         <Card.Body>

@@ -174,8 +174,10 @@ export default class Partner extends React.Component {
 
         return (
             <div className="containerTable">
+                <h4 style={{ textAlign: "center" }}>Sócios</h4>
+
                 <Row className="justify-content-center">
-                    <Button variant="dark" onClick={this.toggleNewPartnerModal}>Adicionar Sócio</Button>
+                    <Button variant="dark" onClick={this.toggleNewPartnerModal}>Adicionar</Button>
                 </Row>
 
                 <Row>
