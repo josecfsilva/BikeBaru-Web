@@ -22,7 +22,7 @@ function App() {
           <Route path='/circuits' component={Circuit} />
           <Route path='/contacts' component={Contacts} />
           <Route path='/contacts' component={Contacts} />
-          <Route path='/robots' component={Robots} />
+          <Route path='/robots.txt' component={Robots} />
 
           <Route path='/loaderio-8cf6c0f47276abcf129b98f5691e13e0' component={Loader} />
         </Switch>
