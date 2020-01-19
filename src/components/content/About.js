@@ -7,7 +7,7 @@ export default class About extends React.Component {
     render() {
         return (
             <Container>
-                <h4 style={{ textAlign: "center" }}>Quem Somos</h4>
+                <h1 style={{ textAlign: "center" }}>Quem Somos</h1>
 
                 <Row className="justify-content-center">
                     <Card style={{ width: '50%' }}>
