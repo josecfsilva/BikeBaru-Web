@@ -8,9 +8,9 @@ export default class Home extends React.Component {
         return (
             <Container>
                 <Row className="justify-content-center">
-                    <Image src={logo} roundedCircle />
+                    <Image src={logo} roundedCircle alt="Logo Bikebaru" />
                 </Row>
-                
+
                 <Row className="justify-content-center">
                     Vem pedalar connosco!
                 </Row>

@@ -11,7 +11,7 @@ export default class About extends React.Component {
 
                 <Row className="justify-content-center">
                     <Card style={{ width: '50%' }}>
-                        <Card.Img variant="top" src={grupo} />
+                        <Card.Img variant="top" src={grupo} alt="Grupo de Ciclistas" />
                     </Card>
                 </Row>
 
