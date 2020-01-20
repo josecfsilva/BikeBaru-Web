@@ -164,7 +164,7 @@ export default class Circuit extends React.Component {
 
         return (
             <div className="containerTable">
-                <h1 style={{ textAlign: "center" }}>Circuitos</h1>
+                <h1 style={{ textAlign: "center" }}>Bike Baru - Circuitos</h1>
 
                 <Row className="justify-content-center">
                     <Button variant="dark" onClick={this.toggleNewCircuitModal}>Adicionar</Button>

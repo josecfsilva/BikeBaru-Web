@@ -12,7 +12,7 @@ export default class Contacts extends React.Component {
     render() {
         return (
             <Container>
-                <h1 style={{ textAlign: "center" }}>Contactos</h1>
+                <h1 style={{ textAlign: "center" }}>Bike Baru - Contactos</h1>
 
                 <Row className="justify-content-center">
                     <Card>
